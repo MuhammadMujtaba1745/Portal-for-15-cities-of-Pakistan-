@@ -5,29 +5,17 @@
 const map = L.map("map").setView([30.3753, 69.3451], 5);
 
 // 2. Base Maps
-const light = L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-    { attribution: "© OpenStreetMap contributors © CARTO", maxZoom: 19 }
-);
-
-const dark = L.tileLayer(
-    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-    { attribution: "© OpenStreetMap contributors © CARTO", maxZoom: 19 }
-).addTo(map);
-
 const osm = L.tileLayer(
     "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    { attribution: "© OpenStreetMap contributors" }
-);
+    { attribution: "© OpenStreetMap contributors", maxZoom: 19 }
+).addTo(map); // default basemap
 
 const satellite = L.tileLayer(
     "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-    { attribution: "Tiles © Esri" }
+    { attribution: "Tiles © Esri", maxZoom: 19 }
 );
 
 L.control.layers({
-    "Light": light,
-    "Dark": dark,
     "OpenStreetMap": osm,
     "Satellite": satellite
 }).addTo(map);
@@ -42,7 +30,7 @@ const locations = [
     { name: "Lahore", latitude: 31.5204, longitude: 74.3587 },
     { name: "Faisalabad", latitude: 31.4504, longitude: 73.1350 },
     { name: "Multan", latitude: 30.1575, longitude: 71.5249 },
-    { name: "Peshawar", latitude: 34.0151, longitude: 71.5249 },
+    { name: "Peshawar", latitude: 34.0151, longitude: 71.5785 },
     { name: "Quetta", latitude: 30.1798, longitude: 66.9750 },
     { name: "Karachi", latitude: 24.8607, longitude: 67.0011 },
     { name: "Gilgit", latitude: 35.9208, longitude: 74.3080 },
@@ -103,7 +91,7 @@ function getTemperatureRadius(t) {
     return 6;
 }
 
-// New palette: deep red > coral > amber > teal > indigo
+// Palette: deep red > coral > amber > teal > blue
 function getTemperatureColor(t) {
     if (t >= 35) return "#ff4d6d";
     if (t >= 30) return "#ff9248";
